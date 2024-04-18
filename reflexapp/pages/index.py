@@ -28,7 +28,7 @@ def checkout_container() -> rx.Component:
         rx.button("Show checkout", on_click=rx.call_script(
             # TODO: this doesn't work because I haven't figured out async/await in the call_script block.
             # but calling checkout.mount doesn't work until the promise is fulfilled
-            f'const stripe = Stripe("{CheckoutState.publishable_key}"); const checkout = stripe.initEmbeddedCheckout({{clientSecret: "{CheckoutState.client_secret}"}});'
+            f'async function initialize() {{ const stripe = Stripe("{CheckoutState.publishable_key}"); const checkout = await stripe.initEmbeddedCheckout({{clientSecret: "{CheckoutState.client_secret}"}}); checkout.mount("#checkout")}} initialize()',
         )
         )
     )
