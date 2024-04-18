@@ -3,7 +3,7 @@ import reflex as rx
 import stripe
 
 # sorry... I hardcoded api keys to prototype this faster locally
-# add your own environment variables
+# TODO: add an environment variables file
 stripe.api_key = 'sk_test_abc123'
 
 class CheckoutState(rx.State):
@@ -25,6 +25,3 @@ class CheckoutState(rx.State):
             return_url="https://stripe.com", # random placeholder
         )
         self.client_secret = session.client_secret
-        rx.call_script(
-            f'async function initialize() {{ const stripe = Stripe("{self.publishable_key}"); const checkout = await stripe.initEmbeddedCheckout({{clientSecret: "{self.client_secret}"}}); checkout.mount("#checkout")}} initialize()',
-        )
