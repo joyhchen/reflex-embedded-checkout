@@ -1,5 +1,3 @@
-"""The home page of the app."""
-
 from reflexapp import styles
 from reflexapp.templates import template
 from reflexapp.state import CheckoutState
@@ -8,11 +6,15 @@ import reflex as rx
 
 def input_ids() -> rx.Component:
     return rx.hstack(
-        rx.input(
-            placeholder="Price ID",
-            value=CheckoutState.price_id,
-            on_change=CheckoutState.set_price_id,
+        rx.vstack(
+            rx.input(
+                placeholder="Customer email",
+                value=CheckoutState.customer_email,
+                on_change=CheckoutState.set_customer_email,
+            ),
         ),
+        # TODO: add an affirmation that the session was created
+        # TODO: add python asyncio. ideally 1 button creates the session and loads checkout but this is hacked together :(
         rx.button(
             "Create session",
             on_click=CheckoutState.create_checkout_session,
@@ -21,13 +23,12 @@ def input_ids() -> rx.Component:
 
 def checkout_container() -> rx.Component:
     return rx.vstack(
-        rx.box(id="checkout"),
+        rx.box(id="checkout"), # the container to load embedded checkout in
         rx.script(
-            src="https://js.stripe.com/v3/",
+            src="https://js.stripe.com/v3/", # load Stripe.js v3
         ),
+        # button that reveals embedded checkout
         rx.button("Show checkout", on_click=rx.call_script(
-            # TODO: this doesn't work because I haven't figured out async/await in the call_script block.
-            # but calling checkout.mount doesn't work until the promise is fulfilled
             f'async function initialize() {{ const stripe = Stripe("{CheckoutState.publishable_key}"); const checkout = await stripe.initEmbeddedCheckout({{clientSecret: "{CheckoutState.client_secret}"}}); checkout.mount("#checkout")}} initialize()',
         )
         )
