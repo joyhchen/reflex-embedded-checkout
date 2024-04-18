@@ -2,13 +2,14 @@ import os
 import reflex as rx
 import stripe
 
-stripe.api_key = os.environ["STRIPE_API_KEY"]
+stripe.api_key = os.environ["STRIPE_SECRET_KEY"]
 
 class CheckoutState(rx.State):
     """The checkout session state."""
 
     price_id: str
     client_secret: str = ""
+    publishable_key: str = os.environ["STRIPE_PUBLISHABLE_KEY"]
 
     def create_checkout_session(self):
         session = stripe.checkout.Session.create(

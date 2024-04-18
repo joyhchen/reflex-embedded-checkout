@@ -19,27 +19,18 @@ def input_ids() -> rx.Component:
         ),
     )
 
-class CheckoutProvider(rx.Component):
-    # TODO: implement this component
-    # https://reflex.dev/docs/wrapping-react/overview/#wrapping-react-overview
-
-    library = "@stripe/react-stripe-js"
-    tag = "EmbeddedCheckoutProvider"
-    # TODO: figure out how to initialize the stripe prop for EmbeddedCheckoutProvider
-    # https://github.com/stripe/react-stripe-js/blob/master/src/components/EmbeddedCheckoutProvider.tsx#L46
-    # stripe: rx.Var[]
-    clientSecret: rx.Var[
-        str
-    ] = CheckoutState.client_secret
-    is_default = False
-
-    lib_dependencies: list[str] = ["@stripe/stripe-js"]
-
-checkout_provider = CheckoutProvider.create
-
-def checkout_builder() -> rx.Component:
+def checkout_container() -> rx.Component:
     return rx.vstack(
-        checkout_provider()
+        rx.box(id="checkout"),
+        rx.script(
+            src="https://js.stripe.com/v3/",
+        ),
+        rx.button("Show checkout", on_click=rx.call_script(
+            # TODO: this doesn't work because I haven't figured out async/await in the call_script block.
+            # but calling checkout.mount doesn't work until the promise is fulfilled
+            f'const stripe = Stripe("{CheckoutState.publishable_key}"); const checkout = stripe.initEmbeddedCheckout({{clientSecret: "{CheckoutState.client_secret}"}});'
+        )
+        )
     )
 
 @template(route="/", title="Home", image="/github.svg")
@@ -52,7 +43,7 @@ def index() -> rx.Component:
     return rx.center(
         rx.vstack(
             input_ids(),
-            checkout_builder(),
+            checkout_container(),
             align="center"
         )
     )
