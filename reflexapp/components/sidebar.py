@@ -18,23 +18,6 @@ def sidebar_header() -> rx.Component:
             rx.image(src="/reflex_white.svg", height="2em"),
         ),
         rx.spacer(),
-        # Link to Reflex GitHub repo.
-        rx.link(
-            rx.center(
-                rx.image(
-                    src="/github.svg",
-                    height="3em",
-                    padding="0.5em",
-                ),
-                box_shadow=styles.box_shadow,
-                bg="transparent",
-                border_radius=styles.border_radius,
-                _hover={
-                    "bg": styles.accent_color,
-                },
-            ),
-            href="https://github.com/reflex-dev/reflex",
-        ),
         align="center",
         width="100%",
         border_bottom=styles.border,
@@ -51,14 +34,13 @@ def sidebar_footer() -> rx.Component:
     return rx.hstack(
         rx.spacer(),
         rx.link(
-            rx.text("Docs"),
+            rx.text("Source"),
             href="https://reflex.dev/docs/getting-started/introduction/",
             style=styles.link_style,
         ),
-        rx.link(
-            rx.text("Blog"),
-            href="https://reflex.dev/blog/",
-            style=styles.link_style,
+        rx.hstack(
+            rx.text("Dark mode: "),
+            rx.color_mode.switch(),
         ),
         width="100%",
         border_top=styles.border,
