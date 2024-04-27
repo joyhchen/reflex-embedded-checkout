@@ -1,15 +1,13 @@
 import os
 import reflex as rx
 import stripe
-
-# sorry... I hardcoded api keys to prototype this faster locally
-# TODO: add an environment variables file
-stripe.api_key = 'sk_test_abc123'
+import os
 
 class CheckoutState(rx.State):
     customer_email: str
     client_secret: str
-    publishable_key: str = "pk_test_abc123"
+    publishable_key: str = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+    stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 
     def create_checkout_session(self):
         session = stripe.checkout.Session.create(
