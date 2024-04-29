@@ -1,4 +1,12 @@
-# Welcome to Reflex!
+# Reflex embedded checkout
+
+To run the project, run the command below (replace the environment variables with your API keys):
+
+```
+STRIPE_SECRET_KEY='sk_test_abc123' STRIPE_PUBLISHABLE_KEY='pk_test_abc123' reflex run
+```
+
+---
 
 This is the base Reflex template - installed when you run `reflex init`.
 
