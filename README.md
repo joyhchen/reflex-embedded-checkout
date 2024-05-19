@@ -1,12 +1,12 @@
 # Reflex embedded checkout
 
-Stripe offers two ways to integrate Checkout ([overview](https://docs.stripe.com/payments/checkout)), and the integration path for both is different.
-1. **Hosted**: You redirect your customers to a separate URL. You can specify a return URL so that customers return to your website when they're done checking out.
+Stripe offers two ways to integrate Checkout ([overview](https://docs.stripe.com/payments/checkout)).
+1. **Hosted**: Redirect your customers to a separate URL. Specify a return URL so that customers return to your website when they're done checking out.
 2. **Embedded**: Keep your customers on your site by embedding the checkout form directly.
 
-This repo demonstrates how to integrate option 2, **embedded checkout**. The hosted integration should be a lot simpler to implement ([follow this guide](https://docs.stripe.com/checkout/quickstart)).
+This repo demonstrates how to integrate option 2, **embedded checkout**. The hosted integration should be a lot simpler to implement because it's a simple URL redirect ([follow this guide](https://docs.stripe.com/checkout/quickstart)).
 
-To run the project, run the command below (replace the environment variables with your API keys):
+To run the project, run the command below. Replace the environment variables with your API keys.
 
 ```
 STRIPE_SECRET_KEY='sk_test_abc123' STRIPE_PUBLISHABLE_KEY='pk_test_abc123' reflex run
